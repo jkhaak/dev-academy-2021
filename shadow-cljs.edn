@@ -1,5 +1,6 @@
 {:dependencies
- [[reagent "1.0.0"]]
+ [[reagent "1.0.0"]
+  [arttuka/reagent-material-ui "4.11.2-0"]]
 
  :source-paths
  ["src/cljs"]
@@ -8,5 +9,6 @@
  {:app {:target :browser
         :output-dir "resources/public/js"
         :assets-path "/js"
+        :js-options {:anon-fn-naming-policy :unmapped}
         :modules {:main {:entries [academy.core]}}}}}
  
