@@ -1,0 +1,12 @@
+{:dependencies
+ [[reagent "1.0.0"]]
+
+ :source-paths
+ ["src/cljs"]
+
+ :builds
+ {:app {:target :browser
+        :output-dir "resources/public/js"
+        :assets-path "/js"
+        :modules {:main {:entries [academy.core]}}}}}
+ 

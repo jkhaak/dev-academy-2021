@@ -1,4 +1,4 @@
-(ns server
+(ns academy.server
   (:require [clojure.java.io :as io]
             [cheshire.core :refer [parse-string]]
             [ring.adapter.jetty :as jetty]
@@ -65,7 +65,9 @@
                            coercion/coerce-exceptions-middleware
                            coercion/coerce-request-middleware
                            coercion/coerce-response-middleware]}})
-    (ring/create-default-handler)))
+    (ring/routes
+      (ring/create-resource-handler {:path "/"})
+      (ring/create-default-handler))))
 
 (defonce running-server (atom nil))
 

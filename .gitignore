@@ -1,4 +1,7 @@
 
+resources/public/js
+.shadow-cljs/
+
 # Created by https://www.toptal.com/developers/gitignore/api/node,macos,vim,clojure
 # Edit at https://www.toptal.com/developers/gitignore?templates=node,macos,vim,clojure
 
