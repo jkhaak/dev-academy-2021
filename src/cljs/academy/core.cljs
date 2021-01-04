@@ -33,7 +33,23 @@
 
 (def with-custom-styles (styles/with-styles custom-styles))
 
+(defn custom-table-cell-style [{:keys [palette] :as theme}]
+  {:head {:background-color (-> palette :common :black)
+          :color (-> palette :common :white)}})
+
+(defn custom-table-row-style [{:keys [palette] :as theme}]
+  {:root {"&:nth-of-type(odd)" {:background-color (-> palette :action :hover)}}})
+
+(def styled-table-cell ((styles/with-styles custom-table-cell-style) table-cell))
+(def styled-table-row ((styles/with-styles custom-table-row-style) table-row))
+
 (defonce data (atom nil))
+
+(defn create-table-row [i {:keys [name amount]}]
+  [styled-table-row
+   {:key i}
+   [styled-table-cell name]
+   [styled-table-cell amount]])
 
 (defn app [{:keys [classes] :as props}]
   [grid
@@ -54,7 +70,7 @@
        (fn []
          (go (let [response (<! (http/get "http://localhost:3000/api/names/"))]
                (reset! data (-> response :body :names)))))}
-      "List names order by amount"]
+      "Order by amount"]
 
      [button
       {:variant  "contained"
@@ -64,22 +80,20 @@
        (fn []
          (go (let [response (<! (http/get "http://localhost:3000/api/names/alpha"))]
                (reset! data (-> response :body :names)))))}
-      "List names order by name"]]]
-   [table-container
-    [table
-     {:class (:table classes)}
-     
-     [table-head
-      [table-row
-       [table-cell "#"]
-       [table-cell "Name"]
-       [table-cell "Amount"]]]
+      "Order by name"]]]
 
-     [table-body
-      [table-row
-       [table-cell 1]
-       [table-cell "Tuomas"]
-       [table-cell "11"]]]]]])
+   (if @data
+     [table-container
+      [table
+       {:class (:table classes)}
+     
+       [table-head
+        [styled-table-row
+         [styled-table-cell "Name"]
+         [styled-table-cell "Amount"]]]
+
+       [table-body
+        (map-indexed create-table-row @data)]]])])
 
 
 (defn root []
