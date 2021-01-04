@@ -6,7 +6,7 @@
          prismatic/schema {:mvn/version "1.1.12"}
          cheshire/cheshire {:mvn/version "5.10.0"}}
  :aliases 
- {:clj-paths ["src/main"]
+ {:clj-paths ["src/clj"]
   :resource-paths ["resources"]
 
   :repl/rebel-nrepl

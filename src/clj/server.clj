@@ -1,4 +1,4 @@
-(ns server.core
+(ns server
   (:require [clojure.java.io :as io]
             [cheshire.core :refer [parse-string]]
             [ring.adapter.jetty :as jetty]
