@@ -1,0 +1,14 @@
+{:paths ["src/main"]
+ :deps  {org.clojure/clojure {:mvn/version "1.10.1"}
+         ring/ring {:mvn/version "1.8.2"}
+         metosin/reitit {:mvn/version "0.5.11"}
+         metosin/ring-http-response {:mvn/version "0.9.1"}
+         cheshire/cheshire {:mvn/version "5.10.0"}}
+ :aliases {:repl/rebel-nrepl
+           {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}
+                         cider/cider-nrepl {:mvn/version "0.25.6"}
+                         com.bhauman/rebel-readline {:mvn/version "0.1.4"}}
+            :main-opts  ["-m" "nrepl.cmdline"
+                         "--middleware" "[cider.nrepl/cider-middleware]"
+                         "-i"
+                         "-f" "rebel-readline.main/-main"]}}}
