@@ -1,5 +1,6 @@
 (ns server.core
-  (:require [cheshire.core :refer [parse-string]]
+  (:require [clojure.java.io :as io]
+            [cheshire.core :refer [parse-string]]
             [ring.adapter.jetty :as jetty]
             [ring.middleware.params :as params]
             [ring.util.http-response :as response]
@@ -10,7 +11,7 @@
             [reitit.ring :as ring]
             [schema.core :as s]))
 
-(def names (-> (slurp "names.json")
+(def names (-> (slurp (io/resource "names.json"))
                (parse-string true)
                :names))
 
