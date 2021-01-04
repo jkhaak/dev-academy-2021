@@ -1,5 +1,6 @@
 {:dependencies
  [[reagent "1.0.0"]
+  [cljs-http "0.1.46"]
   [arttuka/reagent-material-ui "4.11.2-0"]]
 
  :source-paths

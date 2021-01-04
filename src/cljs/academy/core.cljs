@@ -1,5 +1,8 @@
 (ns academy.core
-  (:require [reagent.core :as r :refer [atom]]
+  (:require-macros [cljs.core.async.macros :refer [go]])
+  (:require [cljs-http.client :as http]
+            [cljs.core.async :refer [<!]]
+            [reagent.core :as r :refer [atom]]
             [reagent.dom :as rdom]
             [reagent-material-ui.colors :as colors]
             [reagent-material-ui.core.button :refer [button]]
@@ -45,12 +48,22 @@
      {:disable-gutters true}
      [button
       {:variant  "contained"
-       :class    (:button classes)}
+       :class    (:button classes)
+
+       :on-click
+       (fn []
+         (go (let [response (<! (http/get "http://localhost:3000/api/names/"))]
+               (reset! data (-> response :body :names)))))}
       "List names order by amount"]
 
      [button
       {:variant  "contained"
-       :class    (:button classes)}
+       :class    (:button classes)
+
+       :on-click
+       (fn []
+         (go (let [response (<! (http/get "http://localhost:3000/api/names/alpha"))]
+               (reset! data (-> response :body :names)))))}
       "List names order by name"]]]
    [table-container
     [table
