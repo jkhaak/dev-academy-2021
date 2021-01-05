@@ -1,4 +1,4 @@
-(ns academy.server
+(ns academy.core
   (:require [clojure.java.io :as io]
             [cheshire.core :refer [parse-string]]
             [ring.adapter.jetty :as jetty]
@@ -37,7 +37,7 @@
 (defn calculate-total [names]
   (apply + (map :amount names)))
 
-(def my-routes
+(def api-routes
   ["/api/names"
    ["/" {:get {:description "Return all names"
                :handler (fn [request]
@@ -55,10 +55,15 @@
                                       (let [n (-> request :path-params :name)]
                                         (response/ok {:result (get-amount names n)})))}}]])
 
+(def index-route
+  ["/" {:get {:description "Forward to the index.html"}
+         :handler (fn [_] (response/found "/index.html"))}])
+
 (def app
   (ring/ring-handler
     (ring/router
-      [my-routes]
+      [index-route
+       api-routes]
       {:data {:muuntaja   m/instance
               :middleware [params/wrap-params
                            muuntaja/format-middleware
@@ -84,4 +89,7 @@
   (println "Server stopped"))
 
 (defn -main [& args]
-  (println "hello world"))
+  (start)
+  (println "Press any key to stop server")
+  (read-line)
+  (stop))

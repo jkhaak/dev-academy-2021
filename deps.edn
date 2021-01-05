@@ -1,13 +1,17 @@
-{:paths [:clj-paths :resource-paths]
+{:paths ["src/clj" "resources"]
+
  :deps  {org.clojure/clojure {:mvn/version "1.10.1"}
          ring/ring {:mvn/version "1.8.2"}
          metosin/reitit {:mvn/version "0.5.11"}
          metosin/ring-http-response {:mvn/version "0.9.1"}
          prismatic/schema {:mvn/version "1.1.12"}
          cheshire/cheshire {:mvn/version "5.10.0"}}
+
  :aliases 
- {:clj-paths ["src/clj"]
-  :resource-paths ["resources"]
+ {:uberdeps
+  {:replace-paths []
+   :replace-deps {uberdeps/uberdeps {:mvn/version "1.0.3"}}
+   :main-opts ["-m" "uberdeps.uberjar"]}
 
   :repl/rebel-nrepl
   {:extra-deps {nrepl/nrepl {:mvn/version "0.8.3"}
