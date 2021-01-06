@@ -82,7 +82,7 @@
                (reset! data (-> response :body :names)))))}
       "Order by name"]]]
 
-   (if @data
+   (if-let [d @data]
      [table-container
       [table
        {:class (:table classes)}
@@ -93,7 +93,7 @@
          [styled-table-cell "Amount"]]]
 
        [table-body
-        (map-indexed create-table-row @data)]]])])
+        (map-indexed create-table-row d)]]])])
 
 
 (defn root []
